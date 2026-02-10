@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "bmewburn.vscode-intelephense-client",
+    "felixfbecker.php-debug",
+    "ecmel.vscode-html-css",
+    "formulahendry.auto-rename-tag",
+    "ritwickdey.liveserver",
+    "cweijan.vscode-mysql-client2",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+    "anbuselvanrocky.bootstrap5-vscode",
+    "christian-kohler.path-intellisense"
+  ]
+}

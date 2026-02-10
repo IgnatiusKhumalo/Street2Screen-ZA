@@ -1,0 +1,67 @@
+# PHP
+*.log
+*.cache
+
+# Configuration files (keep examples, ignore actual configs)
+src/config/config.php
+src/config/database.php
+
+# Keep example configs
+!src/config/config.example.php
+!src/config/database.example.php
+
+# Database files
+*.sql.bak
+*_backup.sql
+
+# IDE files
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependencies
+vendor/
+node_modules/
+
+# Uploads (large files - don't commit user uploads)
+src/public/images/products/*
+src/public/images/users/*
+src/public/images/categories/*
+
+# But keep the .gitkeep files
+!src/public/images/products/.gitkeep
+!src/public/images/users/.gitkeep
+!src/public/images/categories/.gitkeep
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Sensitive information
+.env
+*.pem
+*.key
+credentials.txt
+passwords.txt
+
+# Build files
+dist/
+build/
+
+# Test files
+phpinfo.php
+test.php
+error_test.php
+
+# Logs
+logs/
+*.log
