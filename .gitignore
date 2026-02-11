@@ -65,3 +65,6 @@ error_test.php
 # Logs
 logs/
 *.log
+
+# SMTP Configuration (contains sensitive keys)
+src/config/smtp_config.php
