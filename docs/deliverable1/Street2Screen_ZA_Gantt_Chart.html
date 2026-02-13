@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street2Screen ZA - Project Gantt Chart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #0B1F3A;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #FFC107;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #0B1F3A;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .gantt-wrapper {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        
+        .gantt-chart {
+            min-width: 1300px;
+        }
+        
+        .gantt-header {
+            display: grid;
+            grid-template-columns: 280px repeat(21, 1fr);
+            background: #0B1F3A;
+            color: white;
+            font-weight: 600;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .gantt-header > div {
+            padding: 10px 5px;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.75rem;
+        }
+        
+        .gantt-header > div:first-child {
+            text-align: left;
+            padding-left: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .gantt-row {
+            display: grid;
+            grid-template-columns: 280px repeat(21, 1fr);
+            border-bottom: 1px solid #e0e0e0;
+            min-height: 45px;
+            align-items: center;
+        }
+        
+        .gantt-row:hover {
+            background: #f9f9f9;
+        }
+        
+        .task-name {
+            padding: 8px 15px;
+            font-weight: 500;
+            border-right: 2px solid #e0e0e0;
+            font-size: 0.85rem;
+        }
+        
+        .deliverable {
+            background: #fff3e0;
+            font-weight: 700;
+            color: #0B1F3A;
+        }
+        
+        .phase-name {
+            padding-left: 25px;
+            font-size: 0.8rem;
+        }
+        
+        .timeline-cell {
+            border-right: 1px solid #f0f0f0;
+            position: relative;
+            padding: 4px 2px;
+        }
+        
+        .bar {
+            height: 26px;
+            border-radius: 4px;
+            position: relative;
+            margin: 0 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .completed {
+            background: linear-gradient(135deg, #2ECC71 0%, #27ae60 100%);
+        }
+        
+        .in-progress {
+            background: linear-gradient(135deg, #FFC107 0%, #f39c12 100%);
+            animation: pulse 2s infinite;
+        }
+        
+        .upcoming {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+        
+        .deliverable-bar {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            font-size: 0.75rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .milestone::after {
+            content: '◆';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box h3 {
+            color: #0B1F3A;
+            margin-bottom: 10px;
+        }
+        
+        .info-box ul {
+            margin-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+        }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗓️ STREET2SCREEN ZA - PROJECT GANTT CHART</h1>
+            <p><strong>Duration:</strong> 5 February 2026 - 3 July 2026 (21 weeks) | <strong>Student:</strong> Ignatius Khumalo | <strong>Course:</strong> ITECA3-12</p>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color completed"></div>
+                <span>✅ Completed</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color in-progress"></div>
+                <span>🔄 In Progress</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color upcoming"></div>
+                <span>⏳ Upcoming</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color deliverable-bar"></div>
+                <span>📌 Deliverable Due</span>
+            </div>
+        </div>
+        
+        <div class="gantt-wrapper">
+            <div class="gantt-chart">
+                <div class="gantt-header">
+                    <div>Task / Phase</div>
+                    <div>W1<br>Feb 5</div>
+                    <div>W2<br>Feb 12</div>
+                    <div>W3<br>Feb 19</div>
+                    <div>W4<br>Feb 26</div>
+                    <div>W5<br>Mar 5</div>
+                    <div>W6<br>Mar 12</div>
+                    <div>W7<br>Mar 19</div>
+                    <div>W8<br>Mar 26</div>
+                    <div>W9<br>Apr 2</div>
+                    <div>W10<br>Apr 9</div>
+                    <div>W11<br>Apr 16</div>
+                    <div>W12<br>Apr 23</div>
+                    <div>W13<br>Apr 30</div>
+                    <div>W14<br>May 7</div>
+                    <div>W15<br>May 14</div>
+                    <div>W16<br>May 21</div>
+                    <div>W17<br>May 28</div>
+                    <div>W18<br>Jun 4</div>
+                    <div>W19<br>Jun 11</div>
+                    <div>W20<br>Jun 18</div>
+                    <div>W21<br>Jun 25</div>
+                </div>
+                
+                <!-- D1 -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">📄 D1: PROJECT PROPOSAL</div>
+                    <div class="timeline-cell"><div class="bar completed">✓</div></div>
+                    <div class="timeline-cell"><div class="bar completed">✓</div></div>
+                    <div class="timeline-cell"><div class="bar in-progress">📝</div></div>
+                    <div class="timeline-cell milestone"><div class="bar deliverable-bar">DUE</div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Environment Setup -->
+                <div class="gantt-row">
+                    <div class="task-name phase-name">Environment Setup Complete</div>
+                    <div class="timeline-cell"><div class="bar completed">✓</div></div>
+                    <div class="timeline-cell"><div class="bar completed">✓</div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Design Phase -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">🎨 SYSTEM DESIGN</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Design Details -->
+                <div class="gantt-row">
+                    <div class="task-name phase-name">EERD, DFD, Use Cases, CRC</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Database Schema -->
+                <div class="gantt-row">
+                    <div class="task-name phase-name">Database Schema Creation</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Authentication -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">👤 USER AUTHENTICATION</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Auth Details -->
+                <div class="gantt-row">
+                    <div class="task-name phase-name">Registration, Login, Email Verify</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Product Marketplace -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">📦 PRODUCT MARKETPLACE</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Product Details -->
+                <div class="gantt-row">
+                    <div class="task-name phase-name">Listings, Search, Cart, Checkout</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Payment -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">💳 PAYMENT SYSTEM</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Payment Details -->
+                <div class="gantt-row">
+                    <div class="task-name phase-name">PayFast Integration & Orders</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- D2 -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">📄 D2: DOCUMENTATION & CODE</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell milestone"><div class="bar deliverable-bar">DUE</div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Communication -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">💬 COMMUNICATION FEATURES</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Communication Details -->
+                <div class="gantt-row">
+                    <div class="task-name phase-name">Messaging, Reviews, Disputes</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- D3 -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">📄 D3: USER MANUAL</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell milestone"><div class="bar deliverable-bar">DUE</div></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Admin Panel -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">🔧 ADMIN PANEL & RBAC</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"><div class="bar upcoming"></div></div>
+                    <div class="timeline-cell"></div>
+                </div>
+                
+                <!-- Final Presentation -->
+                <div class="gantt-row">
+                    <div class="task-name deliverable">🎤 FINAL PRESENTATION</div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"></div>
+                    <div class="timeline-cell"><div class="bar upcoming">📅</div></div>
+                    <div class="timeline-cell milestone"><div class="bar deliverable-bar">DEMO</div></div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>📊 Current Status (Week 2 - February 12, 2026)</h3>
+            <ul>
+                <li><strong>✅ Completed:</strong> Research, environment setup (Git, GitHub, XAMPP, VS Code, InfinityFree, Brevo SMTP), live placeholder deployed</li>
+                <li><strong>🔄 In Progress:</strong> Finalizing Deliverable 1 Project Proposal (due Feb 27)</li>
+                <li><strong>⏳ Next Steps:</strong> System design diagrams (EERD, DFD, Use Cases), database schema creation</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>🎯 Critical Deadlines</h3>
+            <ul>
+                <li><strong>27 February 2026:</strong> Deliverable 1 - Project Proposal submission</li>
+                <li><strong>5 June 2026:</strong> Deliverable 2 - Complete documentation and codebase</li>
+                <li><strong>12 June 2026:</strong> Deliverable 3 - User Manual documentation</li>
+                <li><strong>26 June - 3 July 2026:</strong> Final Presentation with live platform demonstration</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Street2Screen ZA</strong> - Bringing Kasi To Your Screen 🇿🇦</p>
+            <p>Developer: Ignatius Mayibongwe Khumalo | Course: ITECA3-12 | Institution: Eduvos | Year: 2026</p>
+            <p>Live: <a href="https://street2screen.infinityfreeapp.com" target="_blank" style="color: #FFC107;">street2screen.infinityfreeapp.com</a> | GitHub: github.com/IgnatiusKhumalo/Street2Screen-ZA</p>
+        </div>
+    </div>
+</body>
+</html>

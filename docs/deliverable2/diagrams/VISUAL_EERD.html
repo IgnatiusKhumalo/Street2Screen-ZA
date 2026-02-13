@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EERD - Street2Screen ZA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #FFC107;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #0B1F3A;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .diagram-wrapper {
+            overflow-x: auto;
+            margin: 40px 0;
+        }
+        
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .entity {
+            fill: white;
+            stroke: #0B1F3A;
+            stroke-width: 2;
+        }
+        
+        .entity-header {
+            fill: #0B1F3A;
+        }
+        
+        .entity-title {
+            fill: white;
+            font-size: 14px;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+        
+        .attribute {
+            fill: #333;
+            font-size: 11px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .pk {
+            fill: #FFC107;
+            font-weight: 700;
+        }
+        
+        .fk {
+            fill: #2ECC71;
+            font-weight: 700;
+        }
+        
+        .relationship {
+            stroke: #0B1F3A;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+        
+        .relationship-label {
+            fill: #666;
+            font-size: 10px;
+            font-weight: 600;
+            text-anchor: middle;
+        }
+        
+        .cardinality {
+            fill: #e74c3c;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        
+        .legend {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .legend h3 {
+            color: #0B1F3A;
+            margin-bottom: 15px;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            border-radius: 3px;
+        }
+        
+        .stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            border-radius: 5px;
+        }
+        
+        .stats h3 {
+            color: #0B1F3A;
+            margin-bottom: 10px;
+        }
+        
+        @media print {
+            body { background: white; }
+            .stats { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗄️ ENHANCED ENTITY RELATIONSHIP DIAGRAM (EERD)</h1>
+            <p><strong>Street2Screen ZA:</strong> Complete Database Design | <strong>Student:</strong> Ignatius Mayibongwe Khumalo</p>
+            <p style="margin-top: 10px; color: #666;">Database: street2screen_db | Tables: 15 | Foreign Keys: 23</p>
+        </div>
+        
+        <div class="diagram-wrapper">
+            <svg width="1500" height="2000" viewBox="0 0 1500 2000">
+                <!-- Define arrow marker -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#0B1F3A" />
+                    </marker>
+                </defs>
+                
+                <!-- USERS TABLE (Center Top) -->
+                <rect x="550" y="50" width="300" height="380" class="entity"/>
+                <rect x="550" y="50" width="300" height="40" class="entity-header"/>
+                <text x="700" y="75" class="entity-title">USERS</text>
+                
+                <text x="560" y="110" class="attribute pk">PK user_id INT</text>
+                <text x="560" y="130" class="attribute">full_name VARCHAR(100)</text>
+                <text x="560" y="150" class="attribute">email VARCHAR(100) UNIQUE</text>
+                <text x="560" y="170" class="attribute">password_hash VARCHAR(255)</text>
+                <text x="560" y="190" class="attribute">user_type ENUM</text>
+                <text x="560" y="210" class="attribute">phone VARCHAR(15)</text>
+                <text x="560" y="230" class="attribute">address TEXT</text>
+                <text x="560" y="250" class="attribute">township VARCHAR(100)</text>
+                <text x="560" y="270" class="attribute">profile_picture VARCHAR(255)</text>
+                <text x="560" y="290" class="attribute">email_verified BOOLEAN</text>
+                <text x="560" y="310" class="attribute">verification_token VARCHAR(64)</text>
+                <text x="560" y="330" class="attribute">account_status ENUM</text>
+                <text x="560" y="350" class="attribute">created_at TIMESTAMP</text>
+                <text x="560" y="370" class="attribute">updated_at TIMESTAMP</text>
+                <text x="560" y="390" class="attribute">last_login TIMESTAMP</text>
+                <text x="560" y="410" class="attribute" style="font-size: 9px; fill: #999;">+ 5 more fields...</text>
+                
+                <!-- CATEGORIES TABLE (Left Top) -->
+                <rect x="50" y="500" width="250" height="200" class="entity"/>
+                <rect x="50" y="500" width="250" height="40" class="entity-header"/>
+                <text x="175" y="525" class="entity-title">CATEGORIES</text>
+                
+                <text x="60" y="560" class="attribute pk">PK category_id INT</text>
+                <text x="60" y="580" class="attribute">category_name VARCHAR(50)</text>
+                <text x="60" y="600" class="attribute">description TEXT</text>
+                <text x="60" y="620" class="attribute">icon_class VARCHAR(50)</text>
+                <text x="60" y="640" class="attribute">display_order INT</text>
+                <text x="60" y="660" class="attribute">active BOOLEAN</text>
+                <text x="60" y="685" class="attribute" style="font-size: 10px; font-style: italic; fill: #2ECC71;">Fixed: 5 categories</text>
+                
+                <!-- PRODUCTS TABLE (Center) -->
+                <rect x="550" y="500" width="300" height="340" class="entity"/>
+                <rect x="550" y="500" width="300" height="40" class="entity-header"/>
+                <text x="700" y="525" class="entity-title">PRODUCTS</text>
+                
+                <text x="560" y="560" class="attribute pk">PK product_id INT</text>
+                <text x="560" y="580" class="attribute fk">FK seller_id INT → users</text>
+                <text x="560" y="600" class="attribute fk">FK category_id INT → categories</text>
+                <text x="560" y="620" class="attribute">product_name VARCHAR(100)</text>
+                <text x="560" y="640" class="attribute">description TEXT</text>
+                <text x="560" y="660" class="attribute">price DECIMAL(10,2)</text>
+                <text x="560" y="680" class="attribute">stock_quantity INT</text>
+                <text x="560" y="700" class="attribute">location VARCHAR(100)</text>
+                <text x="560" y="720" class="attribute">condition ENUM</text>
+                <text x="560" y="740" class="attribute">status ENUM</text>
+                <text x="560" y="760" class="attribute">view_count INT</text>
+                <text x="560" y="780" class="attribute">featured BOOLEAN</text>
+                <text x="560" y="800" class="attribute">created_at TIMESTAMP</text>
+                <text x="560" y="820" class="attribute">updated_at TIMESTAMP</text>
+                
+                <!-- PRODUCT_IMAGES TABLE (Right Top) -->
+                <rect x="1150" y="500" width="300" height="220" class="entity"/>
+                <rect x="1150" y="500" width="300" height="40" class="entity-header"/>
+                <text x="1300" y="525" class="entity-title">PRODUCT_IMAGES</text>
+                
+                <text x="1160" y="560" class="attribute pk">PK image_id INT</text>
+                <text x="1160" y="580" class="attribute fk">FK product_id INT → products</text>
+                <text x="1160" y="600" class="attribute">image_path VARCHAR(255)</text>
+                <text x="1160" y="620" class="attribute">thumbnail_path VARCHAR(255)</text>
+                <text x="1160" y="640" class="attribute">is_primary BOOLEAN</text>
+                <text x="1160" y="660" class="attribute">display_order INT</text>
+                <text x="1160" y="680" class="attribute">uploaded_at TIMESTAMP</text>
+                <text x="1160" y="705" class="attribute" style="font-size: 10px; font-style: italic; fill: #e74c3c;">3-5 images per product</text>
+                
+                <!-- ORDERS TABLE (Center Middle) -->
+                <rect x="550" y="900" width="300" height="400" class="entity"/>
+                <rect x="550" y="900" width="300" height="40" class="entity-header"/>
+                <text x="700" y="925" class="entity-title">ORDERS</text>
+                
+                <text x="560" y="960" class="attribute pk">PK order_id INT</text>
+                <text x="560" y="980" class="attribute fk">FK buyer_id INT → users</text>
+                <text x="560" y="1000" class="attribute fk">FK seller_id INT → users</text>
+                <text x="560" y="1020" class="attribute fk">FK product_id INT → products</text>
+                <text x="560" y="1040" class="attribute">quantity INT</text>
+                <text x="560" y="1060" class="attribute">unit_price DECIMAL(10,2)</text>
+                <text x="560" y="1080" class="attribute">total_amount DECIMAL(10,2)</text>
+                <text x="560" y="1100" class="attribute">payment_method ENUM</text>
+                <text x="560" y="1120" class="attribute">payment_status ENUM</text>
+                <text x="560" y="1140" class="attribute">delivery_address TEXT</text>
+                <text x="560" y="1160" class="attribute">delivery_status ENUM</text>
+                <text x="560" y="1180" class="attribute">tracking_number VARCHAR(100)</text>
+                <text x="560" y="1200" class="attribute">order_date TIMESTAMP</text>
+                <text x="560" y="1220" class="attribute">payment_date TIMESTAMP</text>
+                <text x="560" y="1240" class="attribute">delivered_date TIMESTAMP</text>
+                <text x="560" y="1260" class="attribute" style="font-size: 9px; fill: #999;">+ 2 more fields...</text>
+                
+                <!-- TRANSACTIONS TABLE (Left Middle) -->
+                <rect x="50" y="900" width="300" height="280" class="entity"/>
+                <rect x="50" y="900" width="300" height="40" class="entity-header"/>
+                <text x="200" y="925" class="entity-title">TRANSACTIONS</text>
+                
+                <text x="60" y="960" class="attribute pk">PK transaction_id INT</text>
+                <text x="60" y="980" class="attribute fk">FK order_id INT → orders</text>
+                <text x="60" y="1000" class="attribute">payfast_payment_id VARCHAR</text>
+                <text x="60" y="1020" class="attribute">transaction_amount DECIMAL</text>
+                <text x="60" y="1040" class="attribute">platform_fee DECIMAL (5%)</text>
+                <text x="60" y="1060" class="attribute">seller_payout DECIMAL</text>
+                <text x="60" y="1080" class="attribute">transaction_date TIMESTAMP</text>
+                <text x="60" y="1100" class="attribute">payout_status ENUM</text>
+                <text x="60" y="1120" class="attribute">payout_date TIMESTAMP</text>
+                <text x="60" y="1140" class="attribute">payout_reference VARCHAR</text>
+                
+                <!-- REVIEWS TABLE (Right Middle) -->
+                <rect x="1150" y="900" width="300" height="320" class="entity"/>
+                <rect x="1150" y="900" width="300" height="40" class="entity-header"/>
+                <text x="1300" y="925" class="entity-title">REVIEWS</text>
+                
+                <text x="1160" y="960" class="attribute pk">PK review_id INT</text>
+                <text x="1160" y="980" class="attribute fk">FK order_id INT → orders</text>
+                <text x="1160" y="1000" class="attribute fk">FK reviewer_id INT → users</text>
+                <text x="1160" y="1020" class="attribute fk">FK seller_id INT → users</text>
+                <text x="1160" y="1040" class="attribute">rating INT (1-5)</text>
+                <text x="1160" y="1060" class="attribute">review_text TEXT</text>
+                <text x="1160" y="1080" class="attribute">seller_response TEXT</text>
+                <text x="1160" y="1100" class="attribute">response_date TIMESTAMP</text>
+                <text x="1160" y="1120" class="attribute">helpful_count INT</text>
+                <text x="1160" y="1140" class="attribute">flagged BOOLEAN</text>
+                <text x="1160" y="1160" class="attribute">created_at TIMESTAMP</text>
+                <text x="1160" y="1180" class="attribute">updated_at TIMESTAMP</text>
+                
+                <!-- CONVERSATIONS TABLE (Bottom Left) -->
+                <rect x="50" y="1350" width="280" height="240" class="entity"/>
+                <rect x="50" y="1350" width="280" height="40" class="entity-header"/>
+                <text x="190" y="1375" class="entity-title">CONVERSATIONS</text>
+                
+                <text x="60" y="1410" class="attribute pk">PK conversation_id INT</text>
+                <text x="60" y="1430" class="attribute fk">FK buyer_id INT → users</text>
+                <text x="60" y="1450" class="attribute fk">FK seller_id INT → users</text>
+                <text x="60" y="1470" class="attribute fk">FK product_id INT → products</text>
+                <text x="60" y="1490" class="attribute">status ENUM</text>
+                <text x="60" y="1510" class="attribute">created_at TIMESTAMP</text>
+                <text x="60" y="1530" class="attribute">last_message_at TIMESTAMP</text>
+                
+                <!-- MESSAGES TABLE (Bottom Center-Left) -->
+                <rect x="420" y="1350" width="280" height="280" class="entity"/>
+                <rect x="420" y="1350" width="280" height="40" class="entity-header"/>
+                <text x="560" y="1375" class="entity-title">MESSAGES</text>
+                
+                <text x="430" y="1410" class="attribute pk">PK message_id INT</text>
+                <text x="430" y="1430" class="attribute fk">FK conversation_id INT</text>
+                <text x="430" y="1450" class="attribute fk">FK sender_id INT → users</text>
+                <text x="430" y="1470" class="attribute">message_text TEXT</text>
+                <text x="430" y="1490" class="attribute">attachment_path VARCHAR</text>
+                <text x="430" y="1510" class="attribute">read_status BOOLEAN</text>
+                <text x="430" y="1530" class="attribute">read_at TIMESTAMP</text>
+                <text x="430" y="1550" class="attribute">sent_at TIMESTAMP</text>
+                <text x="430" y="1570" class="attribute">deleted_by_sender BOOL</text>
+                <text x="430" y="1590" class="attribute">deleted_by_receiver BOOL</text>
+                
+                <!-- VERIFICATION_DOCUMENTS TABLE (Bottom Center-Right) -->
+                <rect x="790" y="1350" width="320" height="280" class="entity"/>
+                <rect x="790" y="1350" width="320" height="40" class="entity-header"/>
+                <text x="950" y="1375" class="entity-title">VERIFICATION_DOCUMENTS</text>
+                
+                <text x="800" y="1410" class="attribute pk">PK document_id INT</text>
+                <text x="800" y="1430" class="attribute fk">FK user_id INT → users</text>
+                <text x="800" y="1450" class="attribute fk">FK reviewed_by INT → users</text>
+                <text x="800" y="1470" class="attribute">document_path VARCHAR(255)</text>
+                <text x="800" y="1490" class="attribute">document_type ENUM</text>
+                <text x="800" y="1510" class="attribute">verification_status ENUM</text>
+                <text x="800" y="1530" class="attribute">rejection_reason TEXT</text>
+                <text x="800" y="1550" class="attribute">uploaded_at TIMESTAMP</text>
+                <text x="800" y="1570" class="attribute">reviewed_at TIMESTAMP</text>
+                
+                <!-- DISPUTES TABLE (Bottom Right) -->
+                <rect x="1170" y="1350" width="280" height="300" class="entity"/>
+                <rect x="1170" y="1350" width="280" height="40" class="entity-header"/>
+                <text x="1310" y="1375" class="entity-title">DISPUTES</text>
+                
+                <text x="1180" y="1410" class="attribute pk">PK dispute_id INT</text>
+                <text x="1180" y="1430" class="attribute fk">FK order_id INT → orders</text>
+                <text x="1180" y="1450" class="attribute fk">FK reported_by INT → users</text>
+                <text x="1180" y="1470" class="attribute fk">FK resolved_by INT → users</text>
+                <text x="1180" y="1490" class="attribute">dispute_reason ENUM</text>
+                <text x="1180" y="1510" class="attribute">description TEXT</text>
+                <text x="1180" y="1530" class="attribute">evidence_paths TEXT</text>
+                <text x="1180" y="1550" class="attribute">status ENUM</text>
+                <text x="1180" y="1570" class="attribute">resolution_outcome ENUM</text>
+                <text x="1180" y="1590" class="attribute">resolution_notes TEXT</text>
+                <text x="1180" y="1610" class="attribute">created_at TIMESTAMP</text>
+                
+                <!-- ADMIN_LOGS TABLE (Very Bottom Left) -->
+                <rect x="50" y="1700" width="280" height="260" class="entity"/>
+                <rect x="50" y="1700" width="280" height="40" class="entity-header"/>
+                <text x="190" y="1725" class="entity-title">ADMIN_LOGS</text>
+                
+                <text x="60" y="1760" class="attribute pk">PK log_id INT</text>
+                <text x="60" y="1780" class="attribute fk">FK admin_id INT → users</text>
+                <text x="60" y="1800" class="attribute">action_type VARCHAR(50)</text>
+                <text x="60" y="1820" class="attribute">target_type VARCHAR(50)</text>
+                <text x="60" y="1840" class="attribute">target_id INT</text>
+                <text x="60" y="1860" class="attribute">action_details TEXT</text>
+                <text x="60" y="1880" class="attribute">ip_address VARCHAR(45)</text>
+                <text x="60" y="1900" class="attribute">user_agent VARCHAR(255)</text>
+                <text x="60" y="1920" class="attribute">timestamp TIMESTAMP</text>
+                
+                <!-- TRANSLATIONS TABLE (Very Bottom Center) -->
+                <rect x="420" y="1700" width="280" height="240" class="entity"/>
+                <rect x="420" y="1700" width="280" height="40" class="entity-header"/>
+                <text x="560" y="1725" class="entity-title">TRANSLATIONS</text>
+                
+                <text x="430" y="1760" class="attribute pk">PK translation_id INT</text>
+                <text x="430" y="1780" class="attribute">language_code VARCHAR(5)</text>
+                <text x="430" y="1800" class="attribute">translation_key VARCHAR(100)</text>
+                <text x="430" y="1820" class="attribute">translation_text TEXT</text>
+                <text x="430" y="1840" class="attribute">created_at TIMESTAMP</text>
+                <text x="430" y="1860" class="attribute">updated_at TIMESTAMP</text>
+                <text x="430" y="1885" class="attribute" style="font-size: 10px; font-style: italic; fill: #2ECC71;">11 SA languages</text>
+                
+                <!-- PASSWORD_RESETS TABLE (Very Bottom Right) -->
+                <rect x="790" y="1700" width="280" height="220" class="entity"/>
+                <rect x="790" y="1700" width="280" height="40" class="entity-header"/>
+                <text x="930" y="1725" class="entity-title">PASSWORD_RESETS</text>
+                
+                <text x="800" y="1760" class="attribute pk">PK reset_id INT</text>
+                <text x="800" y="1780" class="attribute">email VARCHAR(100)</text>
+                <text x="800" y="1800" class="attribute">reset_token VARCHAR(64)</text>
+                <text x="800" y="1820" class="attribute">token_expiry DATETIME</text>
+                <text x="800" y="1840" class="attribute">used BOOLEAN</text>
+                <text x="800" y="1860" class="attribute">created_at TIMESTAMP</text>
+                
+                <!-- SESSIONS TABLE (Very Bottom Far Right) -->
+                <rect x="1150" y="1700" width="280" height="220" class="entity"/>
+                <rect x="1150" y="1700" width="280" height="40" class="entity-header"/>
+                <text x="1290" y="1725" class="entity-title">SESSIONS</text>
+                
+                <text x="1160" y="1760" class="attribute pk">PK session_id VARCHAR(128)</text>
+                <text x="1160" y="1780" class="attribute fk">FK user_id INT → users</text>
+                <text x="1160" y="1800" class="attribute">session_data TEXT</text>
+                <text x="1160" y="1820" class="attribute">ip_address VARCHAR(45)</text>
+                <text x="1160" y="1840" class="attribute">user_agent VARCHAR(255)</text>
+                <text x="1160" y="1860" class="attribute">created_at TIMESTAMP</text>
+                <text x="1160" y="1880" class="attribute">last_activity TIMESTAMP</text>
+                
+                <!-- RELATIONSHIPS (ARROWS) -->
+                
+                <!-- Users to Products -->
+                <path d="M 700 430 L 700 500" class="relationship"/>
+                <text x="720" y="470" class="cardinality">1</text>
+                <text x="720" y="490" class="cardinality">M</text>
+                <text x="750" y="470" class="relationship-label">creates</text>
+                
+                <!-- Categories to Products -->
+                <path d="M 300 600 L 550 620" class="relationship"/>
+                <text x="310" y="595" class="cardinality">1</text>
+                <text x="540" y="615" class="cardinality">M</text>
+                <text x="420" y="605" class="relationship-label">contains</text>
+                
+                <!-- Products to Product_Images -->
+                <path d="M 850 620 L 1150 620" class="relationship"/>
+                <text x="860" y="615" class="cardinality">1</text>
+                <text x="1140" y="615" class="cardinality">M</text>
+                <text x="1000" y="610" class="relationship-label">has</text>
+                
+                <!-- Products to Orders -->
+                <path d="M 700 840 L 700 900" class="relationship"/>
+                <text x="720" y="870" class="cardinality">1</text>
+                <text x="720" y="895" class="cardinality">M</text>
+                
+                <!-- Users to Orders (Buyer) -->
+                <path d="M 650 430 L 650 900" class="relationship"/>
+                <text x="630" y="660" class="cardinality">1</text>
+                <text x="630" y="895" class="cardinality">M</text>
+                <text x="610" y="670" class="relationship-label" style="font-size: 9px;">buys</text>
+                
+                <!-- Users to Orders (Seller) -->
+                <path d="M 750 430 L 750 900" class="relationship"/>
+                <text x="770" y="660" class="cardinality">1</text>
+                <text x="770" y="895" class="cardinality">M</text>
+                <text x="790" y="670" class="relationship-label" style="font-size: 9px;">sells</text>
+                
+                <!-- Orders to Transactions -->
+                <path d="M 550 1100 L 350 1040" class="relationship"/>
+                <text x="450" y="1070" class="cardinality">1:1</text>
+                
+                <!-- Orders to Reviews -->
+                <path d="M 850 1050 L 1150 1050" class="relationship"/>
+                <text x="1000" y="1045" class="cardinality">1:0..1</text>
+                
+                <!-- Orders to Disputes -->
+                <path d="M 850 1200 L 1170 1450" class="relationship"/>
+                <text x="1010" y="1320" class="cardinality">1:0..1</text>
+                
+                <!-- Users to Conversations (Buyer) -->
+                <path d="M 620 430 L 190 1350" class="relationship"/>
+                <text x="400" y="890" class="cardinality">1:M</text>
+                
+                <!-- Users to Conversations (Seller) -->
+                <path d="M 740 430 L 190 1350" class="relationship"/>
+                
+                <!-- Conversations to Messages -->
+                <path d="M 330 1480 L 420 1480" class="relationship"/>
+                <text x="350" y="1475" class="cardinality">1</text>
+                <text x="410" y="1475" class="cardinality">M</text>
+                
+                <!-- Users to Verification_Documents -->
+                <path d="M 780 430 L 950 1350" class="relationship"/>
+                <text x="865" y="890" class="cardinality">1:1</text>
+                
+                <!-- Users to Admin_Logs -->
+                <path d="M 600 430 L 190 1700" class="relationship"/>
+                <text x="395" y="1065" class="cardinality">1:M</text>
+                
+                <!-- Users to Sessions -->
+                <path d="M 820 430 L 1290 1700" class="relationship"/>
+                <text x="1055" y="1065" class="cardinality">1:M</text>
+                
+            </svg>
+        </div>
+        
+        <div class="legend">
+            <h3>📖 Legend</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #FFC107;"></div>
+                    <span><strong>PK</strong> = Primary Key (yellow)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #2ECC71;"></div>
+                    <span><strong>FK</strong> = Foreign Key (green)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #e74c3c;"></div>
+                    <span><strong>Cardinality</strong> = 1, M, 1:M, 1:1 (red)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #0B1F3A;"></div>
+                    <span><strong>Relationship</strong> = Arrow line</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <h3>📊 Database Statistics</h3>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+                <li><strong>Total Tables:</strong> 15</li>
+                <li><strong>Total Foreign Keys:</strong> 23 relationships</li>
+                <li><strong>Character Set:</strong> utf8mb4 (supports all 11 SA languages + emoji)</li>
+                <li><strong>Collation:</strong> utf8mb4_unicode_ci</li>
+                <li><strong>Triggers:</strong> 3 automated triggers (stock update, platform fee calculation, message timestamp)</li>
+                <li><strong>Views:</strong> 2 optimized views (active products, seller ratings)</li>
+                <li><strong>Indexes:</strong> 60+ for query performance</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e0e0e0; color: #666;">
+            <p><strong>Enhanced Entity Relationship Diagram</strong> - Complete Database Design</p>
+            <p>Student: Ignatius Mayibongwe Khumalo | Eduvos Private Institution | ITECA3-12</p>
+        </div>
+    </div>
+</body>
+</html>

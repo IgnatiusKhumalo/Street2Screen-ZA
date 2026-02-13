@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Diagram - Street2Screen ZA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #FFC107;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #0B1F3A;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .diagram-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .entity {
+            fill: #0B1F3A;
+        }
+        
+        .entity-text {
+            fill: white;
+            font-size: 14px;
+            font-weight: 600;
+            text-anchor: middle;
+        }
+        
+        .system {
+            fill: #FFC107;
+        }
+        
+        .system-text {
+            fill: #0B1F3A;
+            font-size: 16px;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+        
+        .system-function {
+            fill: #0B1F3A;
+            font-size: 11px;
+            text-anchor: start;
+        }
+        
+        .external-system {
+            fill: #F2F2F2;
+            stroke: #0B1F3A;
+            stroke-width: 2;
+        }
+        
+        .external-text {
+            fill: #0B1F3A;
+            font-size: 13px;
+            font-weight: 600;
+            text-anchor: middle;
+        }
+        
+        .arrow {
+            stroke: #0B1F3A;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+        
+        .arrow-label {
+            fill: #666;
+            font-size: 10px;
+            text-anchor: middle;
+        }
+        
+        .legend {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .legend h3 {
+            color: #0B1F3A;
+            margin-bottom: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .legend-color {
+            width: 40px;
+            height: 25px;
+            border-radius: 3px;
+            margin-right: 15px;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            border-radius: 5px;
+        }
+        
+        .instructions h3 {
+            color: #0B1F3A;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .instructions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 CONTEXT DIAGRAM (DFD LEVEL 0)</h1>
+            <p><strong>Project:</strong> Street2Screen ZA | <strong>Student:</strong> Ignatius Mayibongwe Khumalo | <strong>Institution:</strong> Eduvos Private Institution</p>
+        </div>
+        
+        <div class="diagram-wrapper">
+            <svg width="1200" height="700" viewBox="0 0 1200 700">
+                <!-- Define arrow marker -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#0B1F3A" />
+                    </marker>
+                </defs>
+                
+                <!-- BUYERS (Top Left) -->
+                <rect x="50" y="50" width="150" height="80" rx="10" class="entity"/>
+                <text x="125" y="75" class="entity-text">BUYERS</text>
+                <text x="125" y="100" class="entity-text" style="font-size: 12px; font-weight: 400;">(Users)</text>
+                <text x="125" y="118" class="entity-text" style="font-size: 10px; font-weight: 400;">Browse & Purchase</text>
+                
+                <!-- SELLERS (Top Right) -->
+                <rect x="1000" y="50" width="150" height="80" rx="10" class="entity"/>
+                <text x="1075" y="75" class="entity-text">SELLERS</text>
+                <text x="1075" y="100" class="entity-text" style="font-size: 12px; font-weight: 400;">(Users)</text>
+                <text x="1075" y="118" class="entity-text" style="font-size: 10px; font-weight: 400;">List Products & Sell</text>
+                
+                <!-- ADMINS (Top Center) -->
+                <rect x="525" y="30" width="150" height="80" rx="10" class="entity"/>
+                <text x="600" y="55" class="entity-text">ADMINS</text>
+                <text x="600" y="80" class="entity-text" style="font-size: 12px; font-weight: 400;">(Moderators)</text>
+                <text x="600" y="98" class="entity-text" style="font-size: 10px; font-weight: 400;">Verify & Moderate</text>
+                
+                <!-- CENTRAL SYSTEM (Middle) -->
+                <ellipse cx="600" cy="320" rx="280" ry="180" class="system"/>
+                <text x="600" y="190" class="system-text" style="font-size: 20px;">STREET2SCREEN ZA</text>
+                <text x="600" y="215" class="system-text" style="font-size: 14px; font-weight: 500;">(C2C E-Commerce Platform)</text>
+                
+                <!-- System Functions -->
+                <text x="380" y="260" class="system-function">• User Registration & Authentication</text>
+                <text x="380" y="280" class="system-function">• Product Listing Management</text>
+                <text x="380" y="300" class="system-function">• Search & Discovery</text>
+                <text x="380" y="320" class="system-function">• Order Processing</text>
+                <text x="380" y="340" class="system-function">• Payment Processing</text>
+                <text x="380" y="360" class="system-function">• Messaging System</text>
+                <text x="380" y="380" class="system-function">• Reviews & Ratings</text>
+                <text x="380" y="400" class="system-function">• Seller Verification</text>
+                <text x="380" y="420" class="system-function">• Dispute Resolution</text>
+                <text x="380" y="440" class="system-function">• Multi-Language Support (11 SA Languages)</text>
+                
+                <!-- PAYFAST (Bottom Left) -->
+                <rect x="100" y="580" width="180" height="70" rx="5" class="external-system"/>
+                <text x="190" y="605" class="external-text">💳 PAYFAST</text>
+                <text x="190" y="628" class="external-text" style="font-size: 11px; font-weight: 400;">Payment Gateway</text>
+                
+                <!-- BREVO SMTP (Bottom Center) -->
+                <rect x="510" y="580" width="180" height="70" rx="5" class="external-system"/>
+                <text x="600" y="605" class="external-text">📧 BREVO SMTP</text>
+                <text x="600" y="628" class="external-text" style="font-size: 11px; font-weight: 400;">Email Service</text>
+                
+                <!-- DATABASE (Bottom Right) -->
+                <rect x="920" y="580" width="180" height="70" rx="5" class="external-system"/>
+                <text x="1010" y="605" class="external-text">🗄️ DATABASE</text>
+                <text x="1010" y="628" class="external-text" style="font-size: 11px; font-weight: 400;">MySQL 8.0</text>
+                
+                <!-- ARROWS: Buyers to System -->
+                <path d="M 125 130 L 125 200 Q 125 220, 145 220 L 350 220" class="arrow"/>
+                <text x="200" y="210" class="arrow-label">Orders, Searches, Reviews</text>
+                
+                <path d="M 350 250 L 145 250 Q 125 250, 125 270 L 125 310" class="arrow" transform="rotate(180 237.5 280)"/>
+                <text x="200" y="290" class="arrow-label">Results, Confirmations</text>
+                
+                <!-- ARROWS: Sellers to System -->
+                <path d="M 1075 130 L 1075 200 Q 1075 220, 1055 220 L 850 220" class="arrow"/>
+                <text x="950" y="210" class="arrow-label">Product Listings</text>
+                
+                <path d="M 850 250 L 1055 250 Q 1075 250, 1075 270 L 1075 310" class="arrow" transform="rotate(180 962.5 280)"/>
+                <text x="950" y="290" class="arrow-label">Order Notifications</text>
+                
+                <!-- ARROWS: Admins to System -->
+                <path d="M 600 110 L 600 140" class="arrow"/>
+                <text x="620" y="130" class="arrow-label">Moderation</text>
+                
+                <path d="M 620 140 L 620 110" class="arrow"/>
+                <text x="645" y="130" class="arrow-label">Reports</text>
+                
+                <!-- ARROWS: System to PayFast -->
+                <path d="M 400 450 L 230 560" class="arrow"/>
+                <text x="280" y="500" class="arrow-label">Payment Requests</text>
+                
+                <path d="M 250 560 L 420 450" class="arrow"/>
+                <text x="300" y="520" class="arrow-label">IPN Callbacks</text>
+                
+                <!-- ARROWS: System to Brevo -->
+                <path d="M 600 500 L 600 580" class="arrow"/>
+                <text x="620" y="545" class="arrow-label">Email Sending</text>
+                
+                <!-- ARROWS: System to Database -->
+                <path d="M 800 450 L 970 560" class="arrow"/>
+                <text x="880" y="510" class="arrow-label">CRUD Operations</text>
+                
+                <path d="M 950 560 L 780 450" class="arrow"/>
+                <text x="850" y="530" class="arrow-label">Query Results</text>
+            </svg>
+        </div>
+        
+        <div class="legend">
+            <h3>Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #0B1F3A;"></div>
+                <span><strong>External Entities (People):</strong> Users who interact with the system (Buyers, Sellers, Admins)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FFC107;"></div>
+                <span><strong>Central System:</strong> Street2Screen ZA platform with all core functions</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #F2F2F2; border: 2px solid #0B1F3A;"></div>
+                <span><strong>External Systems:</strong> Third-party services (PayFast, Brevo SMTP, Database)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: transparent; border: 2px solid #0B1F3A; border-right: none;"></div>
+                <span><strong>Data Flows:</strong> Arrows show direction of data movement with descriptions</span>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📸 How to Use This Diagram</h3>
+            <ol>
+                <li><strong>Screenshot:</strong> Press <kbd>Ctrl + Shift + S</kbd> (Windows) or use Snipping Tool to capture the entire diagram</li>
+                <li><strong>Print to PDF:</strong> Press <kbd>Ctrl + P</kbd> and select "Save as PDF" for high-quality output</li>
+                <li><strong>For D2 Submission:</strong> Include this diagram in your documentation under "Context Diagram (DFD Level 0)"</li>
+                <li><strong>Explanation:</strong> This diagram shows the entire Street2Screen ZA system as one process, with all external entities that interact with it</li>
+            </ol>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e0e0e0; color: #666;">
+            <p><strong>Street2Screen ZA</strong> - Bringing Kasi To Your Screen 🇿🇦</p>
+            <p>Student: Ignatius Mayibongwe Khumalo | Institution: Eduvos Private Institution | Course: ITECA3-12</p>
+        </div>
+    </div>
+</body>
+</html>

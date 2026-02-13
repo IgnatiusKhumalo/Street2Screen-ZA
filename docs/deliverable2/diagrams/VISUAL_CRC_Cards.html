@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRC Cards - Street2Screen ZA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #0B1F3A;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .crc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .crc-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .crc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #0B1F3A 0%, #1a3a5c 100%);
+            color: white;
+            padding: 20px;
+            border-bottom: 4px solid #FFC107;
+        }
+        
+        .card-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .card-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            color: #FFC107;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #FFC107;
+            padding-bottom: 5px;
+        }
+        
+        .section-content {
+            color: #333;
+            line-height: 1.8;
+        }
+        
+        .section-content ul {
+            margin-left: 20px;
+        }
+        
+        .section-content li {
+            margin: 5px 0;
+        }
+        
+        .methods {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #2ECC71;
+        }
+        
+        .methods code {
+            background: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #0B1F3A;
+        }
+        
+        .collaborators {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #FFC107;
+        }
+        
+        .instructions {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .instructions h3 {
+            color: #0B1F3A;
+            margin-bottom: 15px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .instructions {
+                display: none;
+            }
+            .crc-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .crc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 CRC CARDS (Class-Responsibility-Collaborator)</h1>
+            <p><strong>Street2Screen ZA:</strong> Object-Oriented Design | <strong>Student:</strong> Ignatius Mayibongwe Khumalo | <strong>Institution:</strong> Eduvos Private Institution</p>
+            <p style="margin-top: 10px; color: #666;">Total Classes: 15 | Total Collaborations: 47</p>
+        </div>
+        
+        <div class="crc-grid">
+            <!-- USER CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>1️⃣ USER</h2>
+                    <p>Core user account management</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Register new user account</li>
+                                <li>Authenticate credentials (login)</li>
+                                <li>Verify email address</li>
+                                <li>Update profile information</li>
+                                <li>Reset forgotten password</li>
+                                <li>Manage session state</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>register()</code><br>
+                            <code>login(email, password)</code><br>
+                            <code>verifyEmail(token)</code><br>
+                            <code>updateProfile(data)</code><br>
+                            <code>resetPassword(email)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Database, EmailService, Session, FileUploadHandler, VerificationDocument
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PRODUCT CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>2️⃣ PRODUCT</h2>
+                    <p>Product listing management</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Create new product listing</li>
+                                <li>Update product details</li>
+                                <li>Delete product listing</li>
+                                <li>Search products by keyword</li>
+                                <li>Filter by category/price/location</li>
+                                <li>Manage stock quantity</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>create(data)</code><br>
+                            <code>update(productId, data)</code><br>
+                            <code>search(keyword)</code><br>
+                            <code>filter(criteria)</code><br>
+                            <code>updateStock(quantity)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            User (seller), Category, ProductImage, Order, Database
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PRODUCT IMAGE CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>3️⃣ PRODUCT IMAGE</h2>
+                    <p>Image upload & processing</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Upload product images (3-5)</li>
+                                <li>Generate thumbnails (300x300px)</li>
+                                <li>Generate detail images (800x800px)</li>
+                                <li>Set primary display image</li>
+                                <li>Validate format and size</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>upload(file, productId)</code><br>
+                            <code>generateThumbnail()</code><br>
+                            <code>setPrimary(imageId)</code><br>
+                            <code>delete(imageId)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Product, FileUploadHandler, ImageProcessor (GD library)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CATEGORY CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>4️⃣ CATEGORY</h2>
+                    <p>Product classification (5 fixed)</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Retrieve all categories</li>
+                                <li>Get category details by ID</li>
+                                <li>Count products in category</li>
+                                <li>Manage category icons</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Fixed Categories</div>
+                        <div class="methods" style="border-left-color: #0B1F3A;">
+                            1. Clothing & Fashion<br>
+                            2. Electronics & Accessories<br>
+                            3. Home & Kitchen<br>
+                            4. Food & Drinks<br>
+                            5. Handmade & Crafts
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Product, Database
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ORDER CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>5️⃣ ORDER</h2>
+                    <p>Purchase transaction management</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Create new order</li>
+                                <li>Calculate total amount</li>
+                                <li>Update payment status</li>
+                                <li>Update delivery status</li>
+                                <li>Generate invoice/receipt</li>
+                                <li>Process refunds</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>create(data)</code><br>
+                            <code>calculateTotal(price, qty)</code><br>
+                            <code>updatePaymentStatus()</code><br>
+                            <code>generateInvoice()</code><br>
+                            <code>processRefund()</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            User (buyer/seller), Product, Payment, Transaction, EmailService
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PAYMENT CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>6️⃣ PAYMENT</h2>
+                    <p>PayFast gateway integration</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Initiate PayFast payment</li>
+                                <li>Validate IPN callback</li>
+                                <li>Verify payment signature (MD5)</li>
+                                <li>Process payment confirmation</li>
+                                <li>Handle payment failures</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>initiatePayment(orderId)</code><br>
+                            <code>validateIPN(postData)</code><br>
+                            <code>verifySignature(data)</code><br>
+                            <code>confirmPayment()</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Order, PayFastAPI (external), Transaction, EmailService
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TRANSACTION CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>7️⃣ TRANSACTION</h2>
+                    <p>Financial record keeping</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Record all transactions</li>
+                                <li>Calculate platform fee (5%)</li>
+                                <li>Calculate seller payout</li>
+                                <li>Generate transaction reports</li>
+                                <li>Track payout status</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>create(orderData)</code><br>
+                            <code>calculatePlatformFee()</code><br>
+                            <code>calculateSellerPayout()</code><br>
+                            <code>generateReport(sellerId)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Order, Payment, User (seller), Database
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- REVIEW CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>8️⃣ REVIEW</h2>
+                    <p>Ratings & feedback system</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Submit product/seller review</li>
+                                <li>Calculate average rating</li>
+                                <li>Validate verified purchase</li>
+                                <li>Allow seller response</li>
+                                <li>Flag inappropriate reviews</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>submit(data)</code><br>
+                            <code>calculateAvgRating(sellerId)</code><br>
+                            <code>validatePurchase()</code><br>
+                            <code>postResponse(reviewId)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Order (verification), User (reviewer/seller), Database
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MESSAGE CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>9️⃣ MESSAGE</h2>
+                    <p>Individual chat messages</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Send message between users</li>
+                                <li>Retrieve conversation messages</li>
+                                <li>Mark message as read</li>
+                                <li>Upload image attachments</li>
+                                <li>Delete messages</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>send(conversationId, text)</code><br>
+                            <code>getConversationMessages()</code><br>
+                            <code>markAsRead(messageId)</code><br>
+                            <code>uploadAttachment(file)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Conversation, User, FileUploadHandler, EmailService
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CONVERSATION CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>🔟 CONVERSATION</h2>
+                    <p>Message thread container</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Create conversation thread</li>
+                                <li>Retrieve user's conversations</li>
+                                <li>Archive conversation</li>
+                                <li>Get unread message count</li>
+                                <li>Update last message timestamp</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>create(buyerId, sellerId)</code><br>
+                            <code>getUserConversations(userId)</code><br>
+                            <code>archive(conversationId)</code><br>
+                            <code>getUnreadCount(userId)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Message, User (participants), Product, Database
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- VERIFICATION DOCUMENT CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>1️⃣1️⃣ VERIFICATION DOCUMENT</h2>
+                    <p>Seller identity verification</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Upload verification documents</li>
+                                <li>Validate document format</li>
+                                <li>Store securely (encrypted)</li>
+                                <li>Retrieve pending verifications</li>
+                                <li>Update verification status</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>upload(file, userId)</code><br>
+                            <code>getPending()</code><br>
+                            <code>approve(docId, adminId)</code><br>
+                            <code>reject(docId, reason)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            User (seller), Admin, FileUploadHandler, EmailService
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DISPUTE CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>1️⃣2️⃣ DISPUTE</h2>
+                    <p>Order dispute management</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>File dispute for order</li>
+                                <li>Upload evidence (photos)</li>
+                                <li>Update dispute status</li>
+                                <li>Record resolution outcome</li>
+                                <li>Escalate unresolved disputes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>create(data)</code><br>
+                            <code>uploadEvidence(files)</code><br>
+                            <code>updateStatus(status)</code><br>
+                            <code>resolve(outcome, notes)</code><br>
+                            <code>escalate(disputeId)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Order, User (buyer/seller/moderator), Admin, FileUploadHandler, EmailService
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ADMIN CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>1️⃣3️⃣ ADMIN</h2>
+                    <p>Administration & moderation (RBAC)</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Approve/reject seller verifications</li>
+                                <li>Moderate product listings</li>
+                                <li>Manage user accounts</li>
+                                <li>Resolve disputes</li>
+                                <li>Generate platform reports</li>
+                                <li>Log all admin actions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>approveSeller(docId)</code><br>
+                            <code>moderateProduct(productId)</code><br>
+                            <code>suspendUser(userId, reason)</code><br>
+                            <code>resolveDispute(disputeId)</code><br>
+                            <code>generateReport(type)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            User, Product, VerificationDocument, Dispute, AdminLog
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ADMIN LOG CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>1️⃣4️⃣ ADMIN LOG</h2>
+                    <p>Audit trail tracking</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Record administrative actions</li>
+                                <li>Track who did what and when</li>
+                                <li>Provide audit trail</li>
+                                <li>Enable accountability</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Key Methods</div>
+                        <div class="methods">
+                            <code>log(adminId, action, details)</code><br>
+                            <code>getByAdmin(adminId)</code><br>
+                            <code>getByTarget(type, id)</code><br>
+                            <code>getRecent(limit)</code>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Admin (action performer), Database
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TRANSLATION CLASS -->
+            <div class="crc-card">
+                <div class="card-header">
+                    <h2>1️⃣5️⃣ TRANSLATION</h2>
+                    <p>Multi-language support (11 SA languages)</p>
+                </div>
+                <div class="card-body">
+                    <div class="section">
+                        <div class="section-title">Responsibilities</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Retrieve translated UI text</li>
+                                <li>Support 11 SA languages</li>
+                                <li>Manage translation keys/values</li>
+                                <li>Cache translations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Supported Languages</div>
+                        <div class="methods" style="border-left-color: #2ECC71; font-size: 0.85rem;">
+                            English, Afrikaans, isiZulu, isiXhosa, Sesotho, Sepedi, Setswana, siSwati, isiNdebele, Tshivenda, Xitsonga
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Collaborators</div>
+                        <div class="collaborators">
+                            Session (language preference), Database
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📸 How to Use This Document</h3>
+            <ol style="margin-left: 20px; line-height: 1.8;">
+                <li><strong>Screenshot Method:</strong> Press <kbd>Windows + Shift + S</kbd> and select "Rectangular Snip" to capture individual cards or the entire grid</li>
+                <li><strong>Print to PDF:</strong> Press <kbd>Ctrl + P</kbd> and select "Save as PDF" for high-quality printable version</li>
+                <li><strong>For D2 Submission:</strong> Include this as evidence of your object-oriented design process</li>
+                <li><strong>Understanding:</strong> Each card shows a class's responsibilities (what it does), methods (how it does it), and collaborators (what it works with)</li>
+            </ol>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <p style="font-size: 1.1rem; color: #0B1F3A;"><strong>Total Classes: 15</strong> | <strong>Total Collaborations: 47</strong></p>
+            <p style="margin-top: 10px; color: #666;">Student: Ignatius Mayibongwe Khumalo | Eduvos Private Institution | ITECA3-12</p>
+        </div>
+    </div>
+</body>
+</html>
