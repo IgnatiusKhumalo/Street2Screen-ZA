@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Street2Screen ZA</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #0B1F3A;
+            --primary-yellow: #FFC107;
+            --success-green: #2ECC71;
+            --danger-red: #e74c3c;
+            --light-grey: #F2F2F2;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+        }
+        
+        /* Sidebar */
+        .admin-sidebar {
+            background: var(--primary-blue);
+            min-height: 100vh;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+        
+        .admin-sidebar.mobile-hidden {
+            transform: translateX(-100%);
+        }
+        
+        .sidebar-header {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            color: white;
+            border-bottom: 2px solid var(--primary-yellow);
+        }
+        
+        .sidebar-brand {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .sidebar-brand span {
+            color: var(--primary-yellow);
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .sidebar-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-menu a:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: var(--primary-yellow);
+        }
+        
+        .sidebar-menu a.active {
+            background: rgba(255,193,7,0.2);
+            border-left-color: var(--primary-yellow);
+        }
+        
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .admin-badge {
+            background: var(--danger-red);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+        
+        /* Main Content */
+        .admin-content {
+            margin-left: 250px;
+            padding: 0;
+            transition: margin-left 0.3s;
+        }
+        
+        .admin-content.full-width {
+            margin-left: 0;
+        }
+        
+        /* Top Bar */
+        .admin-topbar {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .admin-user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-yellow);
+        }
+        
+        /* Stats Cards */
+        .stats-row {
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card.blue {
+            border-left-color: #3498db;
+        }
+        
+        .stat-card.green {
+            border-left-color: var(--success-green);
+        }
+        
+        .stat-card.yellow {
+            border-left-color: var(--primary-yellow);
+        }
+        
+        .stat-card.red {
+            border-left-color: var(--danger-red);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .stat-card.blue .stat-icon {
+            background: rgba(52,152,219,0.1);
+            color: #3498db;
+        }
+        
+        .stat-card.green .stat-icon {
+            background: rgba(46,204,113,0.1);
+            color: var(--success-green);
+        }
+        
+        .stat-card.yellow .stat-icon {
+            background: rgba(255,193,7,0.1);
+            color: var(--primary-yellow);
+        }
+        
+        .stat-card.red .stat-icon {
+            background: rgba(231,76,60,0.1);
+            color: var(--danger-red);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Content Cards */
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .card-header-custom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-grey);
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        /* Table */
+        .admin-table {
+            width: 100%;
+        }
+        
+        .admin-table th {
+            background: var(--light-grey);
+            color: var(--primary-blue);
+            font-weight: 600;
+            padding: 12px;
+            font-size: 0.9rem;
+        }
+        
+        .admin-table td {
+            padding: 12px;
+            vertical-align: middle;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .admin-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Badges */
+        .badge-pending {
+            background: var(--primary-yellow);
+            color: var(--primary-blue);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge-approved {
+            background: var(--success-green);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge-rejected {
+            background: var(--danger-red);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* Action Buttons */
+        .btn-approve {
+            background: var(--success-green);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .btn-reject {
+            background: var(--danger-red);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .btn-view-admin {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .admin-sidebar.mobile-show {
+                transform: translateX(0);
+            }
+            
+            .admin-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .admin-topbar {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                <i class="fas fa-shield-alt"></i> Street2Screen<span>ZA</span>
+            </a>
+            <p class="mb-0 mt-2" style="font-size: 0.85rem; opacity: 0.8;">Admin Panel</p>
+        </div>
+        
+        <div class="sidebar-menu">
+            <a href="#" class="active">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-user-check"></i>
+                <span>Verify Sellers</span>
+                <span class="admin-badge">12</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-box"></i>
+                <span>Moderate Products</span>
+                <span class="admin-badge">8</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-users"></i>
+                <span>Manage Users</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Disputes</span>
+                <span class="admin-badge">5</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-flag"></i>
+                <span>Flagged Reviews</span>
+                <span class="admin-badge">3</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-language"></i>
+                <span>Translations</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-history"></i>
+                <span>Audit Logs</span>
+            </a>
+        </div>
+        
+        <div style="position: absolute; bottom: 20px; width: 100%; padding: 0 20px;">
+            <a href="index.html" style="color: white; text-decoration: none; display: block; text-align: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                <i class="fas fa-globe"></i> View Main Site
+            </a>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="admin-content" id="adminContent">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="mb-0" style="font-size: 1.5rem; color: var(--primary-blue);">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard Overview
+                </h2>
+            </div>
+            
+            <div class="admin-user">
+                <div class="text-end d-none d-md-block">
+                    <div style="font-weight: 600; font-size: 0.95rem;">System Administrator</div>
+                    <div style="font-size: 0.8rem; color: #666;">admin@street2screen.co.za</div>
+                </div>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%230B1F3A'/%3E%3Ctext x='20' y='26' font-size='16' fill='%23FFC107' text-anchor='middle' font-weight='bold'%3ESA%3C/text%3E%3C/svg%3E" alt="Admin">
+                <div class="dropdown">
+                    <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-4">
+            <!-- Stats Cards -->
+            <div class="stats-row row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card blue">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-number">5,247</div>
+                        <div class="stat-label">Total Users</div>
+                        <div class="mt-2" style="font-size: 0.85rem; color: var(--success-green);">
+                            <i class="fas fa-arrow-up"></i> +12% this month
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card green">
+                        <div class="stat-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="stat-number">1,089</div>
+                        <div class="stat-label">Verified Sellers</div>
+                        <div class="mt-2" style="font-size: 0.85rem; color: var(--success-green);">
+                            <i class="fas fa-arrow-up"></i> +8% this month
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card yellow">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-number">3,542</div>
+                        <div class="stat-label">Active Products</div>
+                        <div class="mt-2" style="font-size: 0.85rem; color: var(--success-green);">
+                            <i class="fas fa-arrow-up"></i> +15% this month
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card red">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">Pending Actions</div>
+                        <div class="mt-2" style="font-size: 0.85rem; color: var(--danger-red);">
+                            Requires attention
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pending Seller Verifications -->
+            <div class="content-card">
+                <div class="card-header-custom">
+                    <div class="card-title">
+                        <i class="fas fa-user-check"></i> Pending Seller Verifications (12)
+                    </div>
+                    <a href="#" class="btn btn-sm btn-view-admin">View All</a>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Seller Name</th>
+                                <th>Email</th>
+                                <th>Location</th>
+                                <th>Document Type</th>
+                                <th>Submitted</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Thandi Mokoena</strong>
+                                </td>
+                                <td>thandi.m@gmail.com</td>
+                                <td>Soweto, Johannesburg</td>
+                                <td>ID Book</td>
+                                <td>2 hours ago</td>
+                                <td><span class="badge-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-approve me-1">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button class="btn-reject">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Sipho Dlamini</strong>
+                                </td>
+                                <td>sipho.electronics@gmail.com</td>
+                                <td>Alexandra, Johannesburg</td>
+                                <td>Business Registration</td>
+                                <td>5 hours ago</td>
+                                <td><span class="badge-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-approve me-1">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button class="btn-reject">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Nomsa Khumalo</strong>
+                                </td>
+                                <td>nomsa.crafts@yahoo.com</td>
+                                <td>Katlehong, Ekurhuleni</td>
+                                <td>ID Book</td>
+                                <td>1 day ago</td>
+                                <td><span class="badge-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-approve me-1">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button class="btn-reject">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Recent Activity & Flagged Products -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <div class="card-title">
+                                <i class="fas fa-flag"></i> Flagged Products (8)
+                            </div>
+                        </div>
+                        
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Fake Samsung Galaxy S23</strong>
+                                    <br>
+                                    <small class="text-muted">Reported by 3 users</small>
+                                </div>
+                                <button class="btn-view-admin btn-sm">Review</button>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Inappropriate Product Image</strong>
+                                    <br>
+                                    <small class="text-muted">Reported by 1 user</small>
+                                </div>
+                                <button class="btn-view-admin btn-sm">Review</button>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Misleading Description</strong>
+                                    <br>
+                                    <small class="text-muted">Reported by 2 users</small>
+                                </div>
+                                <button class="btn-view-admin btn-sm">Review</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <div class="card-title">
+                                <i class="fas fa-exclamation-triangle"></i> Active Disputes (5)
+                            </div>
+                        </div>
+                        
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Order #12345 - Non-delivery</strong>
+                                    <br>
+                                    <small class="text-muted">Opened 2 days ago</small>
+                                </div>
+                                <button class="btn-view-admin btn-sm">Resolve</button>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Order #12298 - Item not as described</strong>
+                                    <br>
+                                    <small class="text-muted">Opened 1 day ago</small>
+                                </div>
+                                <button class="btn-view-admin btn-sm">Resolve</button>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Order #12201 - Damaged item</strong>
+                                    <br>
+                                    <small class="text-muted">Opened 3 hours ago</small>
+                                </div>
+                                <button class="btn-view-admin btn-sm">Resolve</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            sidebar.classList.toggle('mobile-show');
+        }
+    </script>
+</body>
+</html>
