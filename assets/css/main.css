@@ -1,0 +1,164 @@
+/* Main Stylesheet for Street2Screen ZA */
+
+:root {
+    --primary: #0B1F3A;
+    --secondary: #FFC107;
+    --success: #28a745;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Navbar */
+.navbar-brand img {
+    transition: transform 0.3s;
+}
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+/* Cards */
+.card {
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0B1F3A, #1a3a5c);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1a3a5c, #0B1F3A);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(11, 31, 58, 0.3);
+}
+
+.btn-warning {
+    background: #FFC107;
+    color: #0B1F3A;
+    border: none;
+}
+
+/* Forms */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+/* Badges */
+.badge {
+    padding: 6px 12px;
+    font-weight: 600;
+}
+
+/* Tables */
+.table thead {
+    background: linear-gradient(135deg, #0B1F3A, #1a3a5c);
+    color: white;
+}
+
+/* Product Cards */
+.product-card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.product-card img {
+    transition: transform 0.3s;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Category Cards */
+.category-card {
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    border-color: var(--secondary);
+}
+
+/* Sticky Sidebar */
+.sticky-top {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Loading States */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================
+   DROPDOWN & Z-INDEX FIXES - ADDED
+   ============================================ */
+
+/* Fix dropdown menu being blocked by sticky status card */
+.navbar .dropdown-menu {
+    z-index: 9999 !important;
+}
+
+.navbar {
+    z-index: 1030 !important;
+}
+
+/* Ensure status card doesn't block dropdown */
+.card.sticky-top,
+.card[style*="position:sticky"] {
+    z-index: 10 !important;
+}
+
+/* Make sure navbar stays on top of everything */
+nav.sticky-top {
+    z-index: 1020 !important;
+}

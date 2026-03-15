@@ -1,0 +1,142 @@
+/**
+ * Street2Screen ZA - Responsive & Mobile CSS
+ * Handles all screen sizes from mobile to desktop
+ */
+
+/* ===== MOBILE FIRST (< 576px) ===== */
+@media (max-width: 575px) {
+
+    /* Navbar */
+    .navbar-brand span { font-size: 14px; }
+    .navbar-brand img { width: 35px; height: 35px; }
+
+    /* Hero Section */
+    .hero-section { padding: 40px 15px; }
+    .hero-section h1 { font-size: 1.8rem; }
+    .hero-section .lead { font-size: 1rem; }
+
+    /* Product Cards */
+    .product-card .card-img-top { height: 160px; }
+
+    /* Stat Cards */
+    .stat-card h2 { font-size: 1.5rem; }
+
+    /* Cart */
+    .cart-item-row .col-md-2 img { width: 60px; height: 60px; }
+
+    /* Buttons */
+    .btn-lg { padding: 10px 16px; font-size: 1rem; }
+
+    /* Tables - horizontal scroll */
+    .table-responsive { font-size: 0.85rem; }
+
+    /* Forms */
+    .form-control-lg { font-size: 1rem; }
+
+    /* Footer */
+    footer .col-md-4 { margin-bottom: 20px; }
+
+    /* Splash screen */
+    #splash-screen img { width: 80px; }
+    #splash-screen h1 { font-size: 1.5rem; }
+}
+
+/* ===== TABLET (576px - 768px) ===== */
+@media (min-width: 576px) and (max-width: 767px) {
+
+    .hero-section h1 { font-size: 2rem; }
+    .product-card .card-img-top { height: 180px; }
+    .category-card { margin-bottom: 15px; }
+
+    /* 2-column grid for products */
+    .products-grid .col-md-3 { flex: 0 0 50%; max-width: 50%; }
+}
+
+/* ===== DESKTOP (> 992px) ===== */
+@media (min-width: 992px) {
+
+    /* Sticky sidebar */
+    .sticky-sidebar {
+        position: sticky;
+        top: 80px;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+
+    /* Wider product grid */
+    .products-grid .product-card:hover {
+        transform: translateY(-8px);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .navbar, footer, .btn, .sidebar { display: none !important; }
+    .card { box-shadow: none !important; border: 1px solid #ddd !important; }
+    body { font-size: 12pt; }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.fade-in-up { animation: fadeInUp 0.6s ease forwards; }
+.slide-in-left { animation: slideInLeft 0.5s ease forwards; }
+.pulse { animation: pulse 2s infinite; }
+
+/* Stagger children animations */
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+
+/* ===== UTILITY CLASSES ===== */
+.cursor-pointer { cursor: pointer; }
+.text-shadow { text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+.border-radius-lg { border-radius: 15px !important; }
+.hover-scale { transition: transform 0.2s; }
+.hover-scale:hover { transform: scale(1.02); }
+.hover-bg:hover { background-color: #f8f9fa; }
+.overflow-hidden { overflow: hidden; }
+.z-index-1 { z-index: 1; }
+.min-h-100 { min-height: 100vh; }
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #0B1F3A; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #FFC107; }
+
+/* ===== LOADING SKELETON ===== */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+}
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== TOAST NOTIFICATIONS ===== */
+.toast-container { position: fixed; top: 80px; right: 20px; z-index: 9999; }
+.toast { min-width: 280px; }
+
+/* ===== BADGE STYLES ===== */
+.badge-seller { background: linear-gradient(135deg, #667eea, #764ba2); }
+.badge-buyer { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.badge-admin { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.badge-moderator { background: linear-gradient(135deg, #4facfe, #00f2fe); }

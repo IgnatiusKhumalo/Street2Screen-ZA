@@ -1,0 +1,154 @@
+/* Dark Theme CSS for Street2Screen ZA */
+
+[data-theme="dark"] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-card: #0f3460;
+    --text-primary: #eaeaea;
+    --text-secondary: #a0a0a0;
+    --border-color: #2d3748;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .navbar {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%)!important;
+}
+
+[data-theme="dark"] .card {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .card-header {
+    background-color: var(--bg-secondary);
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .table {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .table-light {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+    background-color: var(--bg-secondary);
+    border-color: #FFC107;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .list-group-item {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .list-group-item:hover {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .alert {
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal-header {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .modal-footer {
+    border-top-color: var(--border-color);
+}
+
+[data-theme="dark"] .text-muted {
+    color: var(--text-secondary)!important;
+}
+
+[data-theme="dark"] footer {
+    background-color: var(--bg-secondary)!important;
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: var(--bg-secondary)!important;
+}
+
+[data-theme="dark"] a {
+    color: #FFC107;
+}
+
+[data-theme="dark"] a:hover {
+    color: #ffdb4d;
+}
+
+/* Product cards in dark mode */
+[data-theme="dark"] .product-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .product-card:hover {
+    border-color: #FFC107;
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+/* Dropdown menus */
+[data-theme="dark"] .dropdown-menu {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background-color: var(--bg-secondary);
+    color: #FFC107;
+}
+
+/* Pagination */
+[data-theme="dark"] .page-link {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .page-link:hover {
+    background-color: var(--bg-card);
+    color: #FFC107;
+}
+
+/* Accordion */
+[data-theme="dark"] .accordion-item {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .accordion-button {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .accordion-button:not(.collapsed) {
+    background-color: var(--bg-card);
+    color: #FFC107;
+}

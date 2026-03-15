@@ -1,0 +1,19 @@
+# Street2Screen ZA
+Options -Indexes
+RewriteEngine On
+RewriteBase /street2screen/
+
+# Protect sensitive files
+<FilesMatch "\.(sql^|log^|env^|md^|sh^|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect directories
+RewriteRule ^config/ - [F,L]
+RewriteRule ^includes/ - [F,L]
+
+# Custom errors
+ErrorDocument 404 /street2screen/404.php
+ErrorDocument 403 /street2screen/403.php
+ErrorDocument 500 /street2screen/500.php

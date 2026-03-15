@@ -1,0 +1,82 @@
+# Street2Screen ZA - Git Ignore File 
+# Generated: 2026/03/15  3:03:37,72 
+ 
+# Uploaded files (user-generated content) 
+uploads/ 
+uploads/* 
+uploads/products/* 
+uploads/documents/* 
+uploads/disputes/* 
+uploads/disputes/appeals/* 
+uploads/disputes/bank_proofs/* 
+uploads/disputes/payment_proofs/* 
+ 
+# Backup files 
+*.backup 
+*.backup* 
+*.OLD 
+*.old 
+backup_old/ 
+ 
+# Sensitive configuration (DO NOT COMMIT REAL CREDENTIALS) 
+config/database.php 
+config/brevo.php 
+ 
+# Test files 
+test*.php 
+debug*.php 
+check*.php 
+quick*.php 
+monitor*.php 
+resend*.php 
+ 
+# Temporary files 
+*.tmp 
+*.temp 
+*.log 
+*.txt 
+conversation-current.txt 
+checkout-current.txt 
+inbox-current.txt 
+send-current.txt 
+ACTUAL_FILES_SCAN.txt 
+@echo 
+'your_database_name' 
+*.sql 
+!schema.sql 
+ 
+# IDE files 
+.vscode/ 
+.idea/ 
+*.sublime-project 
+*.sublime-workspace 
+ 
+# OS files 
+.DS_Store 
+Thumbs.db 
+desktop.ini 
+ 
+# Composer (if using) 
+/vendor/ 
+composer.lock 
+ 
+# Node modules (if using) 
+node_modules/ 
+package-lock.json 
+ 
+# Build files 
+dist/ 
+build/ 
+ 
+# Keep error pages but allow customization 
+# 403.php 
+# 404.php 
+# 500.php 
+ 
+# Batch files for local use only 
+*.bat 
+
+# Additional exclusions
+checkout-current.txtcd
+disputes/*.BEFORE-FINAL
+disputes/*.CURRENT-WORKING
