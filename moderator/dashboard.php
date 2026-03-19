@@ -17,7 +17,18 @@ $db->query("SELECT COUNT(*) as total FROM disputes WHERE status IN ('resolved', 
 $resolvedDisputes=$db->fetch()['total'];
 
 // Get recent disputes - ALL statuses moderator can see
-$db->query("SELECT d.*,p.product_name,buyer.full_name as buyer_name,seller.full_name as seller_name FROM disputes d JOIN orders o ON d.order_id=o.order_id JOIN products p ON o.product_id=p.product_id JOIN users buyer ON o.buyer_id=buyer.user_id JOIN users seller ON o.seller_id=seller.user_id ORDER BY d.created_at DESC LIMIT 10");
+$db->query("SELECT d.*,
+            o.order_id,
+            p.product_name,
+            buyer.email as buyer_name,
+            seller.email as seller_name 
+            FROM disputes d 
+            JOIN orders o ON d.order_id=o.order_id 
+            JOIN products p ON o.product_id=p.product_id 
+            JOIN users buyer ON o.buyer_id=buyer.user_id 
+            JOIN users seller ON o.seller_id=seller.user_id 
+            ORDER BY d.created_at DESC 
+            LIMIT 10");
 $recentDisputes=$db->fetchAll();
 ?>
 
@@ -34,7 +45,8 @@ $recentDisputes=$db->fetchAll();
                 <p class="mb-0">Active Disputes</p>
             </div>
             <div class="card-footer bg-transparent border-0">
-                <a href="<?php echo APP_URL; ?>/admin/disputes.php?filter=open" class="btn btn-light btn-sm w-100">View All</a>
+                <!-- FIXED: Changed from /admin/disputes.php to /moderator/disputes.php -->
+                <a href="<?php echo APP_URL; ?>/moderator/disputes.php?filter=open" class="btn btn-light btn-sm w-100">View All</a>
             </div>
         </div>
     </div>
@@ -46,7 +58,8 @@ $recentDisputes=$db->fetchAll();
                 <p class="mb-0">Under Investigation</p>
             </div>
             <div class="card-footer bg-transparent border-0">
-                <a href="<?php echo APP_URL; ?>/admin/disputes.php?filter=investigating" class="btn btn-light btn-sm w-100">View All</a>
+                <!-- FIXED: Changed from /admin/disputes.php to /moderator/disputes.php -->
+                <a href="<?php echo APP_URL; ?>/moderator/disputes.php?filter=investigating" class="btn btn-light btn-sm w-100">View All</a>
             </div>
         </div>
     </div>
@@ -58,7 +71,8 @@ $recentDisputes=$db->fetchAll();
                 <p class="mb-0">Resolved</p>
             </div>
             <div class="card-footer bg-transparent border-0">
-                <a href="<?php echo APP_URL; ?>/admin/disputes.php?filter=resolved" class="btn btn-light btn-sm w-100">View All</a>
+                <!-- FIXED: Changed from /admin/disputes.php to /moderator/disputes.php -->
+                <a href="<?php echo APP_URL; ?>/moderator/disputes.php?filter=resolved" class="btn btn-light btn-sm w-100">View All</a>
             </div>
         </div>
     </div>
@@ -85,6 +99,14 @@ $recentDisputes=$db->fetchAll();
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if(empty($recentDisputes)): ?>
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-2x mb-2"></i>
+                            <p class="mb-0">No disputes yet</p>
+                        </td>
+                    </tr>
+                    <?php else: ?>
                     <?php foreach($recentDisputes as $d): ?>
                     <?php
                     // Determine status color
@@ -112,17 +134,28 @@ $recentDisputes=$db->fetchAll();
                         </td>
                         <td><?php echo time_ago($d['created_at']); ?></td>
                         <td>
-                            <a href="<?php echo APP_URL; ?>/disputes/view.php?id=<?php echo $d['dispute_id']; ?>" 
+                            <!-- FIXED: Changed from /disputes/view.php to /moderator/resolve-dispute.php -->
+                            <a href="<?php echo APP_URL; ?>/moderator/resolve-dispute.php?id=<?php echo $d['dispute_id']; ?>" 
                                class="btn btn-sm btn-primary">
-                                <i class="fas fa-eye"></i> Review
+                                <i class="fas fa-gavel"></i> Handle
                             </a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
+    
+    <?php if(!empty($recentDisputes)): ?>
+    <div class="card-footer text-center">
+        <!-- FIXED: Added link to view all disputes -->
+        <a href="<?php echo APP_URL; ?>/moderator/disputes.php" class="btn btn-primary">
+            <i class="fas fa-list"></i> View All Disputes
+        </a>
+    </div>
+    <?php endif; ?>
 </div>
 
 </div>
